@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KELAS IX - BAB II: Ruang Publik Virtual & Diseminasi Konten</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #EAF6FF;
+            --bg-container: #F7FBFF;
+            --text-title: #173B57;
+            --btn-border: #315C78;
+            --btn-hover-border: #234A65;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-title);
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        h1, h2 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Glassmorphism styling */
+        .glass-panel {
+            background: rgba(247, 251, 255, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 30px -5px rgba(23, 59, 87, 0.08);
+        }
+
+        /* Floating background decoration keyframes */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(4deg); }
+        }
+
+        @keyframes floatReverse {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(18px) rotate(-5deg); }
+        }
+
+        .bg-float-1 { animation: floatSlow 8s ease-in-out infinite; }
+        .bg-float-2 { animation: floatReverse 10s ease-in-out infinite; }
+        .bg-float-3 { animation: floatSlow 12s ease-in-out infinite 2s; }
+        .bg-float-4 { animation: floatReverse 11s ease-in-out infinite 1s; }
+
+        /* Staggered entrance animation for buttons */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-cascade {
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Button core styling */
+        .nav-btn-link {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: auto;
+            text-decoration: none;
+            color: #FFFFFF;
+            border: 2px solid var(--btn-border);
+            box-shadow: 0 4px 14px rgba(23, 59, 87, 0.12);
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Responsive adjustments for buttons */
+        @media (min-width: 1200px) {
+            .nav-btn-link {
+                min-height: 82px;
+                padding: 18px 26px;
+                border-radius: 18px;
+            }
+            .nav-btn-text { font-size: 17px; }
+        }
+        @media (min-width: 768px) and (max-width: 1199px) {
+            .nav-btn-link {
+                min-height: 78px;
+                padding: 17px 22px;
+                border-radius: 16px;
+            }
+            .nav-btn-text { font-size: 16px; }
+        }
+        @media (max-width: 767px) {
+            .nav-btn-link {
+                min-height: 76px;
+                padding: 16px 18px;
+                border-radius: 15px;
+            }
+            .nav-btn-text { font-size: 14px; }
+        }
+
+        /* Button Text Alignment & Wrapping */
+        .nav-btn-text {
+            line-height: 1.5;
+            font-weight: 600;
+            text-align: justify;
+            flex: 1;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+
+        /* Interactions */
+        .nav-btn-link:hover, .nav-btn-link:focus-visible {
+            transform: translateY(-3px) scale(1.01);
+            border-color: var(--btn-hover-border);
+            box-shadow: 0 10px 24px rgba(23, 59, 87, 0.22);
+        }
+        .nav-btn-link:active {
+            transform: translateY(2px) scale(0.98);
+            box-shadow: 0 2px 8px rgba(23, 59, 87, 0.18);
+        }
+        .nav-btn-link:focus-visible {
+            box-shadow: 0 0 0 4px rgba(103, 197, 216, 0.6), 0 10px 24px rgba(23, 59, 87, 0.22);
+        }
+
+        /* Button Color Variants */
+        .btn-bg-1 { background-color: #527F9B; }
+        .btn-bg-2 { background-color: #477FA0; }
+        .btn-bg-3 { background-color: #557C9A; }
+        .btn-bg-4 { background-color: #5A8296; }
+        .btn-bg-5 { background-color: #527F82; }
+        .btn-bg-6 { background-color: #4C7A97; }
+        .btn-bg-7 { background-color: #667FA3; }
+        .btn-bg-games { background: linear-gradient(135deg, #3F7A9D 0%, #4D8B9E 100%); }
+        .btn-bg-sumatif { background: linear-gradient(135deg, #517B96 0%, #3B6B88 100%); }
+
+        /* Ripple effect CSS */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.35);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        @keyframes ripple-animation {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            body *, .bg-float-1, .bg-float-2, .bg-float-3, .bg-float-4, .animate-cascade {
+                animation: none !important;
+                transition: none !important;
+            }
+            .nav-btn-link:hover { transform: none !important; }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen relative flex flex-col items-center pb-16">
+
+    <!-- Decorative Floating Background Layer -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+        <!-- Globe -->
+        <svg class="absolute top-16 left-8 md:left-24 w-24 h-24 text-[#173B57] opacity-10 bg-float-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.6 9h16.8M3.6 15h16.8M12 3a15.3 15.3 0 014 9 15.3 15.3 0 01-4 9 15.3 15.3 0 01-4-9 15.3 15.3 0 014-9z"></path>
+        </svg>
+        <!-- Smartphone -->
+        <svg class="absolute top-1/4 right-8 md:right-32 w-20 h-20 text-[#41677F] opacity-10 bg-float-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <rect x="5" y="2" width="14" height="20" rx="3" ry="3" stroke-width="1.5"></rect>
+            <line x1="12" y1="18" x2="12.01" y2="18" stroke-width="2.5" stroke-linecap="round"></line>
+        </svg>
+        <!-- Network Nodes -->
+        <svg class="absolute bottom-32 left-10 md:left-20 w-28 h-28 text-[#527F9B] opacity-10 bg-float-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <circle cx="18" cy="5" r="3" stroke-width="1.5"></circle>
+            <circle cx="6" cy="12" r="3" stroke-width="1.5"></circle>
+            <circle cx="18" cy="19" r="3" stroke-width="1.5"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke-width="1.5"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke-width="1.5"></line>
+        </svg>
+        <!-- Chat Bubble -->
+        <svg class="absolute bottom-1/4 right-12 w-24 h-24 text-[#667FA3] opacity-[0.08] bg-float-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+        </svg>
+        <!-- Cloud -->
+        <svg class="absolute top-2/4 left-1/2 -translate-x-1/2 w-48 h-48 text-[#82B5D4] opacity-[0.05] bg-float-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+        </svg>
+    </div>
+
+    <main class="w-full max-w-[1100px] z-10 px-4 sm:px-6 pt-12 md:pt-16">
+        
+        <!-- Header Section -->
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 md:p-10 text-center mb-10 border border-white relative overflow-hidden">
+            <h1 class="text-[28px] sm:text-[34px] md:text-[42px] font-black text-[#173B57] tracking-tight leading-tight mb-2">
+                KELAS IX - BAB II
+            </h1>
+            <h2 class="text-[18px] sm:text-[22px] md:text-[26px] font-bold text-[#41677F] leading-snug max-w-4xl mx-auto">
+                RUANG PUBLIK VIRTUAL &amp; DISEMINASI KONTEN
+            </h2>
+        </div>
+
+        <!-- Buttons Container -->
+        <div class="flex flex-col space-y-4 w-full">
+
+            <!-- Button 1 -->
+            <a href="LINK_PERTEMUAN_1" class="nav-btn-link btn-bg-1 animate-cascade" style="animation-delay: 0.1s;">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white shrink-0 mr-4 shadow-inner">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="9" stroke-width="1.8"></circle>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3.6 9h16.8M3.6 15h16.8M12 3a15 15 0 014 9 15 15 0 01-4 9 15 15 0 01-4-9 15 15 0 014-9z"></path>
+                    </svg>
+                </div>
+                <span class="nav-btn-text">
+                    Pertemuan 1: Pengenalan Ruang Publik Virtual: Jenis, Bentuk, dan Platform Interaksi Digital (Media Sosial, Forum, Platform Kolaborasi)
+                </span>
+            </a>
+
+            <!-- Button 2 -->
+            <a href="LINK_PERTEMUAN_2" class="nav-btn-link btn-bg-2 animate-cascade" style="animation-delay: 0.15s;">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white shrink-0 mr-4 shadow-inner">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4"></path>
+                    </svg>
+                </div>
+                <span class="nav-btn-text">
+                    Pertemuan 2: Karakteristik Ruang Publik Virtual, Etika Berinteraksi, serta Aturan Kewargaan Digital
+                </span>
+            </a>
+
+            <!-- Button 3 -->
+            <a href="LINK_PERTEMUAN_3" class="nav-btn-link btn-bg-3 animate-cascade" style="animation-delay: 0.2s;">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white shrink-0 mr-4 shadow-inner">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="12" rx="2" stroke-width="1.8"></rect>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2 20h20M9 16v4m6-4v4"></path>
+                    </svg>
+                </div>
+                <span class="nav-btn-text">
+                    Pertemuan 3: Pengenalan Perangkat Teknologi Digital untuk Produksi Konten (Aplikasi Desain Visual, Pengolah Teks, &amp; Multimedia)
+                </span>
+            </a>
+
+            <!-- Button 4 -->
+            <a href="LINK_PERTEMUAN_4" class="nav-btn-link btn-bg-4 animate-cascade" style="animation-delay: 0.25s;">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white shrink-0 mr-4 shadow-inner">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <rect x="4" y="3" width="16" height="18" rx="2" stroke-width="1.8"></rect>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 9l5 3-5 3V9z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h8"></path>
+                    </svg>
+                </div>
+                <span class="nav-btn-text">
+                    Pertemuan 4: Praktik Perancangan dan Pembuatan Konten Digital Positif/Edukatif (Infografis, Poster, atau Video Pendek)
+                </span>
+            </a>
+
+            <!-- Button 5 -->
+            <a href="LINK_PERTEMUAN_5" class="nav-btn-link btn-bg-5 animate-cascade" style="animation-delay: 0.3s;">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white shrink-0 mr-4 shadow-inner">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="9" stroke-width="1.8"></circle>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M14 9.5a4 4 0 100 5"></path>
+                    </svg>
+                </div>
+                <span class="nav-btn-text">
+                    Pertemuan 5: Konsep Diseminasi Konten Digital: Pengenalan Saluran Distribusi, Hak Cipta (Copyright), dan Etika Penyebaran Informasi
+                </span>
+            </a>
+
+            <!-- Button 6 -->
+            <a href="LINK_PERTEMUAN_6" class="nav-btn-link btn-bg-6 animate-cascade" style="animation-delay: 0.35s;">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white shrink-0 mr-4 shadow-inner">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                    </svg>
+                </div>
+                <span class="nav-btn-text">
+                    Pertemuan 6: Praktik Diseminasi Konten Positif ke Ruang Publik Virtual secara Bijak, Aman, dan Bertanggung Jawab
+                </span>
+            </a>
+
+            <!-- Button 7 -->
+            <a href="LINK_PERTEMUAN_7" class="nav-btn-link btn-bg-7 animate-cascade" style="animation-delay: 0.4s;">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white shrink-0 mr-4 shadow-inner">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="18" height="12" rx="2" stroke-width="1.8"></rect>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 21h8m-4-6v6"></path>
+                    </svg>
+                </div>
+                <span class="nav-btn-text">
+                    Pertemuan 7: Pameran Karya Konten Digital Positif, Evaluasi Hasil Diseminasi, dan Refleksi Ruang Publik Virtual
+                </span>
+            </a>
+
+            <!-- Button 8: Games -->
+            <a href="LINK_GAMES" class="nav-btn-link btn-bg-games animate-cascade" style="animation-delay: 0.45s;">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center text-white shrink-0 mr-4 shadow-inner">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <rect x="2" y="6" width="20" height="12" rx="6" stroke-width="2"></rect>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 12h4m-2-2v4"></path>
+                        <circle cx="15" cy="10" r="1.5" fill="currentColor"></circle>
+                        <circle cx="17" cy="13" r="1.5" fill="currentColor"></circle>
+                    </svg>
+                </div>
+                <span class="nav-btn-text font-bold text-lg">
+                    Games
+                </span>
+            </a>
+
+            <!-- Button 9: Sumatif -->
+            <a href="LINK_SUMATIF_BAB_II" class="nav-btn-link btn-bg-sumatif animate-cascade" style="animation-delay: 0.5s;">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center text-white shrink-0 mr-4 shadow-inner">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4"></path>
+                    </svg>
+                </div>
+                <span class="nav-btn-text font-bold text-lg">
+                    Sumatif BAB II
+                </span>
+            </a>
+
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Material Ripple Effect on Click / Touch
+            const buttons = document.querySelectorAll('.nav-btn-link');
+            buttons.forEach(button => {
+                button.addEventListener('mousedown', function (e) {
+                    createRipple(e, this);
+                });
+                // Support touch devices
+                button.addEventListener('touchstart', function (e) {
+                    createRipple(e.touches[0], this);
+                }, {passive: true});
+            });
+
+            function createRipple(event, element) {
+                const rect = element.getBoundingClientRect();
+                const circle = document.createElement('span');
+                const diameter = Math.max(rect.width, rect.height);
+                const radius = diameter / 2;
+
+                circle.style.width = circle.style.height = `${diameter}px`;
+                circle.style.left = `${event.clientX - rect.left - radius}px`;
+                circle.style.top = `${event.clientY - rect.top - radius}px`;
+                circle.classList.add('ripple');
+
+                const existingRipple = element.querySelector('.ripple');
+                if (existingRipple) {
+                    existingRipple.remove();
+                }
+
+                element.appendChild(circle);
+            }
+        });
+    </script>
+</body>
+</html>
